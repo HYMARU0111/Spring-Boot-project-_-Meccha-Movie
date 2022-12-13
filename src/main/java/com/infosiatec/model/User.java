@@ -11,11 +11,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class User {
 	@Id
@@ -58,12 +64,10 @@ public class User {
 	@Column(name = "creation_date")
 	private Timestamp createDate;
 
-	public User() {}
+	@UpdateTimestamp
+	@Column(name = "update_date")
+	private Timestamp updateDate;
+
 	
-	@Builder
-	public User(String username, String password, String email, RoleType role) {
-		this.username=username;
-		this.password = password;
-		this.email = email;
-	}
+	
 }

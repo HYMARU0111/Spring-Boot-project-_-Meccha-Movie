@@ -3,17 +3,21 @@ package com.infosiatec.config.auth;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.infosiatec.model.User;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class PrincipalDetail implements UserDetails{
 	
+	@Autowired
 	private User user;
+	
+	
 
 	public PrincipalDetail(User user) {
 		this.user = user;
@@ -21,6 +25,29 @@ public class PrincipalDetail implements UserDetails{
 	
 	public User getUser() {
 		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public int getId() {
+		return user.getId();
+	}
+	public String getFamilyname() {
+		return user.getFamilyname();
+	}
+	
+	public String getOwnname() {
+		return user.getOwnname();
+	}
+	
+	public String getFamilynameKana() {
+		return user.getFamilynameKana();
+	}
+	
+	public String getOwnnameKana() {
+		return user.getOwnname();
 	}
 	
 	@Override
@@ -33,7 +60,12 @@ public class PrincipalDetail implements UserDetails{
 	public String getUsername() {
 		return user.getUsername();
 	}
-
+	
+	public String getEmail() {
+		return user.getEmail();
+	}
+	
+	
 	//계정만료 여부 (true: 만료안됨)
 	@Override
 	public boolean isAccountNonExpired() {

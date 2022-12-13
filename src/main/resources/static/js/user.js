@@ -3,7 +3,9 @@ let user = {
 		$('#btn-save').on('click', () => {
 			this.save();
 		});
-
+		$('#btn-update').on('click', () => {
+			this.update();
+		});
 
 	},
 
@@ -24,38 +26,36 @@ let user = {
 			dataType: "json"
 		}).done(function(resp) {
 			alert("회원 가입이 완료되었습니다.")
-			location.href = "";
+			location.href = "/";
 		}).fail(function() {
 			alert(JSON.stringify(error));
 		});
 
 	},
+	
 	update: function() {
 		let data = {
+			id: $('#id').val(),
 			username: $('#username').val(),
 			password: $('#password').val(),
 			email: $('#email').val()
 		};
 
-		let token = $('meta[name="_csrf"]').attr('content');
-		let header = $('meta[name="_csrf_header"]').attr('content');
-
 		$.ajax({
-			type: "POST",
-			url: "/user/updateForm",
+			type: "PUT",
+			url: "/user",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			beforeSend: function(xhr){
-				xhr.setRequestHeader(header, token);
-			}
 		}).done(function(resp) {
 			alert("会員情報変更に成功しました。")
-			location.href = "";
+			location.href = "/";
 		}).fail(function() {
 			alert(JSON.stringify(error));
 		});
-	}
+	},
+	
+	
 }
 
 user.init();

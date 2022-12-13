@@ -19,7 +19,7 @@ import lombok.Data;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class TimeEntity {
-	@Column(name = "creation_ date")
+	@Column(name = "creation_date")
 	@CreatedDate
 	private String creationDate;
 	

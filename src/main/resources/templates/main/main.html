@@ -13,54 +13,52 @@
 <link th:href="@{/css/style.css}">
 <link th:href="@{/vendor/icofont/icofont.min.css}">
 </head>
-<body>
+<body th:with="page = ${movies}">
 
 	<header th:replace="layout/header :: headerFragment"></header>
-	<div class="row row-cols-1 row-cols-md-3 g-4">
-		<div class="col">
+	
+	<div class = "container-fluid">
+	<div class="row row-cols-1 row-cols-lg-5 row-cols-md-3 g-5 m-2">
+		<div class="col" th:each="movie : ${movies.content}" >
 			<div class="card">
-				<img src="..." class="card-img-top" alt="...">
+				<a th:href="@{/movie/{id}(id=${movie.id})}"><img th:src="@{${movie.imageUrl}}" class="card-img-top"/></a>
 				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This is a longer card with supporting text
-						below as a natural lead-in to additional content. This content is
-						a little bit longer.</p>
-				</div>
-			</div>
-		</div>
-		<div class="col">
-			<div class="card">
-				<img src="..." class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This is a longer card with supporting text
-						below as a natural lead-in to additional content. This content is
-						a little bit longer.</p>
-				</div>
-			</div>
-		</div>
-		<div class="col">
-			<div class="card">
-				<img src="..." class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This is a longer card with supporting text
-						below as a natural lead-in to additional content.</p>
-				</div>
-			</div>
-		</div>
-		<div class="col">
-			<div class="card">
-				<img src="..." class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This is a longer card with supporting text
-						below as a natural lead-in to additional content. This content is
-						a little bit longer.</p>
+					<a th:href="@{/movie/{id}(id=${movie.id})}" th:text="${movie.title}" class="card-title"></a>
+					<p th:text="${movie.releaseDate}" class="card-text"></p>
 				</div>
 			</div>
 		</div>
 	</div>
+	</div>
+	<nav aria-label="page-navigation"
+			th:with="s = ${(page.number + 3 > page.totalPages - 1)
+			? (page.totalPages -1 -6)
+			: (page.number -3)}">
+	  <ul class="pagination justify-content-center">
+	    <li class="page-item" th:class = "|page-item ${page.first ? 'disabled' : ''}|">
+	      <a class="page-link" aria-label = "Previous" th:href="@{''(page=${page.number - 1})}">
+	        <span>&laquo;</span>
+	      </a>
+	    </li>
+	    <li th:each = 'i : ${#numbers.sequence((s < 0 ? 0 : s),
+	    	((s < 0 ? 0 : s) + 6) > (page.totalPages - 1)
+	    	?(page.totalPages -1)
+	    	:((s<0  ? 0: s) < 6))}'
+	    	th:class="|page-item ${(page.number == i) ? 'active' : ''}|">
+	    	<a class = "page-link" th:href = "@{''(page=${i})}">
+	    	<span th:text='${i + 1}'>1</span>
+	    	</a>
+	    </li>
+	    
+   	    <li th:class="|page-item ${page.last ? 'disabled' : ''}|">
+	    	<a class = "page-link" th:href = "@{''(page=${page.number + 1})}" aria-label ="Next">
+	    	<span>&raquo;</span>
+	    	</a>
+	    </li>
+	    
+	  </ul>
+	</nav>
+
 
 	<footer th:replace="layout/footer :: footerFragment"></footer>
 	<script

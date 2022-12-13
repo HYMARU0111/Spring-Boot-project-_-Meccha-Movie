@@ -1,19 +1,17 @@
 server:
   port: 8000  
-  servlet:
-    context-path: /
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
+  tomcat:
+    accesslog:
+      encoding: UTF-8
       
 spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
     encoding: UTF-8
-    mode: HTML
+    mode: HTML5
     check-template-location: true
+    cache: false
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

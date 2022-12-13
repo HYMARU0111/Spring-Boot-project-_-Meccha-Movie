@@ -16,8 +16,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-@Getter
 @Setter
+@Getter
 @Entity
 public class Review extends TimeEntity{
 	@Id
@@ -28,13 +28,10 @@ public class Review extends TimeEntity{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
-
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "movie_id")
 	private Movie movie;
-
-//	@OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//	private List<Comment> comments = new ArrayList<Comment>();
 
 	@Column(nullable = false, length = 100)
 	private String title;
@@ -44,8 +41,7 @@ public class Review extends TimeEntity{
 
 	private double rating;
 
-	private int view;
-//
+	
 //	public void setUser(User user) {
 //		if (this.user != null) {
 //			this.user.getReviews().remove(this);
