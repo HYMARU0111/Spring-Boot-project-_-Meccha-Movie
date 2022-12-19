@@ -11,4 +11,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer>{
 			+ "VALUES(?1, ?2, now(), now(), ?3, ?4, ?5", nativeQuery= true)
 	@Modifying
 	int reviewSave(String title, String content, double rating,int movieId, int userId);
+	
+
 }

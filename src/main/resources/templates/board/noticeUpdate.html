@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja" 
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace = "layout/header :: head">
+	<title>お知らせ　新規作成</title>
+</head>
+<body sec:authorize="hasRole('ROLE_ADMIN')" sec:authorize-url="/admin">
+	<header th:replace="layout/header :: headerFragment"></header>
+		<div class = "container">
+			<form class ="m-3">
+				<input type ="hidden" id ="noticeId" th:value="${notice.id}">
+				<a href="/notice"><button class="btn btn-primary mb-3" type = "button">前に戻る</button></a>
+				<div class="form-group mb-3">
+					<input type="text" class="form-control"
+						id="notice-title" placeholder="タイトルを入力してください。"  th:value = "${notice.title}">
+				</div>
+				<div class="mb-3 form-group">
+					<textarea class="form-control summernote" id="notice-content" th:text="${notice.content}"
+						rows="30"></textarea>
+				</div>
+			</form>
+			<button id = "btn-notice-update" class ="btn btn-primary m-3">修正</button>
+		</div>
+	<script>
+      $('.summernote').summernote({
+        tabsize: 2,
+        height: 350
+      });
+    </script>
+	<footer th:replace="layout/footer :: footerFragment"></footer>
+
+</body>
+</html>

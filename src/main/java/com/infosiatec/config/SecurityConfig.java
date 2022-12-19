@@ -1,5 +1,7 @@
 package com.infosiatec.config;
 
+import javax.servlet.http.HttpFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.infosiatec.config.auth.PrincipalDetailService;
@@ -22,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled=true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 	
@@ -42,7 +46,10 @@ public class SecurityConfig {
 	public BCryptPasswordEncoder encodePWD() {
         return new BCryptPasswordEncoder();
     }
-	
+	@Bean
+	public HttpFirewall defaultHttpFirewall() {
+		return new DefaultHttpFirewall();
+	}
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		auth.userDetailsService(principalDetailService).passwordEncoder(encodePWD());
 	}
@@ -57,10 +64,12 @@ public class SecurityConfig {
 		 http.userDetailsService(principalDetailService)
 					.csrf().disable()
 					.authorizeRequests()
+						.antMatchers("/user/**").authenticated()
+						.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 						.antMatchers("/**","/auth/**")
 						.permitAll()
 						.anyRequest()
-						.authenticated()
+						.permitAll()
 					.and()
 						.formLogin()
 						.loginPage("/auth/loginForm")

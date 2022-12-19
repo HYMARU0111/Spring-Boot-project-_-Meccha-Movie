@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	
+
+<head th:replace = "layout/header :: head">
+	<title th:text="${notice.title} + '- お知らせ'"></title>
+</head>
+<body>
+	<header th:replace="layout/header :: headerFragment"></header>
+	<button class = "btn btn-secondary" onclick = "history.back()">前に戻る</button>
+	
+	<div class = "container-fluid">
+		<div class="row">
+			<div class="col" >
+				<div class="card">
+					<input type = "hidden" id = "noticeId" th:value ="${notice.id}">
+					<h1 id="page-title" th:text="${notice.title}"></h1>
+					<hr />
+					<p id="data-published" th:text="${notice.content}"></p>
+				</div>
+				
+			</div>
+			<div sec:authorize="hasRole('ROLE_ADMIN')" sec:authorize-url="/admin"class="d-flex justify-content-end m-2">
+				<a th:href="@{/notice/{id}/updateNotice(id=${notice.id})}"><button type="button" class="btn btn-outline-primary p-2 m-2">修正</button></a>
+				<button type="button" class="btn btn-outline-primary p-2 m-2" id="btn-notice-delete">削除</button>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/footer :: footerFragment"></footer>
+
+</body>
+</html>

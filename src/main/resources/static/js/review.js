@@ -3,9 +3,7 @@ let review = {
 		$('#btn-review-save').on('click',()=>{
 			this.reviewSave();
 		});		
-		$('#btn-review-update').on('click',()=>{
-			this.reviewUpdate();
-		});	
+
 	},
 	reviewSave: function() {
 		let data = {

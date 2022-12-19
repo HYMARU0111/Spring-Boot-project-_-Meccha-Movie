@@ -21,11 +21,15 @@
 					<label for="username">ID:</label> <input type="text"
 						class="form-control" id="username" placeholder="ユーザーIDを入力してください。"
 						name="username" required>
+				<span id="username-ok" th:text="${valid_username}"></span>
+				
 				</div>
 				<div class="mb-3">
 					<label for="pwd">パスワード:</label> <input type="password"
 						class="form-control" id="password" placeholder="パスワードを入力してください。"
 						name="password" required>
+					<span id="password-ok" th:text="${valid_password}"></span>
+						
 				</div>
 			<button id="btn-login" class="btn btn-primary btn-block mb-3">次へ</button>
 			

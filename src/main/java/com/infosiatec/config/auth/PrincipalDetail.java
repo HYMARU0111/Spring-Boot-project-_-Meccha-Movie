@@ -2,8 +2,8 @@ package com.infosiatec.config.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,11 +14,16 @@ import lombok.Data;
 @Data
 public class PrincipalDetail implements UserDetails{
 	
-	@Autowired
-	private User user;
-	
-	
 
+	private User user;
+	private Map<String, Object> attributes;
+
+	
+	public PrincipalDetail(User user, Map<String, Object> attributes) {
+        this.user = user;
+        this.attributes = attributes;
+    }
+	
 	public PrincipalDetail(User user) {
 		this.user = user;
 	}
@@ -47,7 +52,7 @@ public class PrincipalDetail implements UserDetails{
 	}
 	
 	public String getOwnnameKana() {
-		return user.getOwnname();
+		return user.getOwnnameKana();
 	}
 	
 	@Override
@@ -84,12 +89,13 @@ public class PrincipalDetail implements UserDetails{
 		return true;
 	}
 
-	//계정 활성화(사용가능) (true: 활성화됨)
+	//계정 활성화
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return true; 
 	}
 	
+
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -100,4 +106,5 @@ public class PrincipalDetail implements UserDetails{
 		
 		return collectors;
 	}
+
 }

@@ -10,9 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
@@ -46,12 +44,9 @@ public class Movie {
 	@Lob
 	private String plot;
 	
+
 	@Column(name = "release_date")
 	private LocalDate releaseDate;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="user_id")
-	private User user;
 	
 	@OneToMany(mappedBy = "movie",fetch=FetchType.EAGER, cascade= CascadeType.REMOVE )
 	@JsonIgnoreProperties({"movie"})

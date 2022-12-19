@@ -23,19 +23,17 @@ public class MovieService {
 	@Autowired
 	private ReviewRepository reviewRepository;
 
-	public Page<Movie> 映画リスト(Pageable pageable) {
-		
-		return movieRepository.findAll(pageable);
-	}
 
 	@Transactional(readOnly=true)
 	public Movie 映画詳細(int id) {
+		
 		return movieRepository.findById(id)
 				.orElseThrow(()->{
 					return new IllegalArgumentException("映画詳細呼出の失敗：IDが見つかりませんでした。");
 				});
 	}
 	
+
 	@Transactional
 	public void レビュー作成(User user, int movieId, Review requestReview) {
 		Movie movie = movieRepository.findById(movieId)
@@ -66,6 +64,7 @@ public class MovieService {
 		reviewRepository.deleteById(reviewId);
 	}
 	
+
 
 	
 }
